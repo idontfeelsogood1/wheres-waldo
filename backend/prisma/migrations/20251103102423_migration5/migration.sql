@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Session" ALTER COLUMN "score" SET DEFAULT 0,
+ALTER COLUMN "seconds" SET DEFAULT 0;
