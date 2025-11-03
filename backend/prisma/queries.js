@@ -1,15 +1,15 @@
 const { PrismaClient } = require('../generated/prisma');
 const prisma = new PrismaClient();
 
-async function getLeaderboard() {
+async function findLeaderboard() {
     try {
         return await prisma.leaderboard.findMany({ })
     } catch(err) {
-        // ADD MORE ROBUST ERROR MESSAGE
-        console.log(err)
+        console.log("DB error at getLeaderboard: ", err)
+        throw err
     }
 }
 
 module.exports = {
-    getLeaderboard,
+    findLeaderboard,
 }
