@@ -1,7 +1,9 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-
+const expressSession = require('express-session');
+const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
+const { PrismaClient } = require('./generated/prisma');
 const app = express();
 
 // CONFIGS
@@ -10,6 +12,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  expressSession({
+    cookie: {
+     maxAge: 7 * 24 * 60 * 60 * 1000 // ms
+    },
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    store: new PrismaSessionStore(
+      new PrismaClient(),
+      {
+        checkPeriod: 2 * 60 * 1000,  //ms
+        dbRecordIdIsSessionId: true,
+        dbRecordIdFunction: undefined,
+      }
+    ),
+  })
+);
 
 // ROUTES
 const indexRouter = require('./routes/index');
@@ -28,9 +48,9 @@ app.listen(PORT, (err) => {
 // TODO:
   // START WITH BACKEND 
   // DESIGN DATABASE RELATION
-  // FIGURE OUT HOW TO SAVE REQUIRED DATA IN DB
   // IMPLEMENT SESSION STORAGE TO KEEP TRACK OF ANONYMOUS USER'S PROGRESS
   // IMPLEMENT ROUTES
+  // FIGURE OUT HOW TO SAVE REQUIRED DATA IN DB
 
 // RESPONSIBILITIES:
   // BACKEND SERVES DATA AND WIN CONDITION
