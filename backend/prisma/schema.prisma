@@ -9,27 +9,34 @@ datasource db {
 }
 
 model Leaderboard {
-  id Int @id @default(autoincrement())
-  username String @default("Guest player")
-  gamename String
-  seconds Int 
+  id        Int @id @default(autoincrement())
+  username  String @default("Guest player")
+  gamename  String
+  seconds   Int 
 }
 
 model Image {
-  id Int @id @default(autoincrement())
-  path String
-  baseWidth Int
-  baseHeight Int
+  id          Int @id @default(autoincrement())
+  path        String
+  baseWidth   Int
+  baseHeight  Int
   characters Character[]
 }
 
 model Character {
-  id Int @id @default(autoincrement())
-  imageId Int 
+  id          Int @id @default(autoincrement())
+  imageId     Int 
   image Image @relation(fields: [imageId], references: [id])
-  path String
-  width Int
-  height Int
-  x Int
-  y Int
+  path        String
+  width       Int
+  height      Int
+  x           Int
+  y           Int
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
 }
