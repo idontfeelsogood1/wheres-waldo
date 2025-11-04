@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js",
-    "dev": "node --watch app.js",
+    "start": "node server.js",
+    "dev": "node --watch server.js",
     "generate": "dotenv -e .env -- npx prisma generate",
     "migrate:dev": "dotenv -e .env -- npx prisma migrate dev",
     "migrate:deploy": "dotenv -e .env -- npx prisma migrate deploy",
@@ -18,10 +18,12 @@
     "dotenv": "^17.2.3",
     "express": "~4.16.1",
     "express-session": "^1.18.2",
+    "jest": "^30.2.0",
     "morgan": "~1.9.1",
     "prisma": "^6.18.0"
   },
   "devDependencies": {
-    "dotenv-cli": "^11.0.0"
+    "dotenv-cli": "^11.0.0",
+    "supertest": "^7.1.4"
   }
 }
