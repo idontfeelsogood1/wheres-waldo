@@ -35,15 +35,7 @@ app.use(
 const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
 
-// APP RUNNING
-const PORT = 3000
-app.listen(PORT, (err) => {
-  if (err) {
-    console.log("App failed to run: ", err)
-    return
-  }
-  console.log(`App running on PORT: ${PORT}`)
-})
+module.exports = app
 
 // TODO:
   // START WITH BACKEND 
