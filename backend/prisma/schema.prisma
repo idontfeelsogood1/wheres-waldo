@@ -15,9 +15,9 @@ model Leaderboard {
   seconds   Int 
 }
 
-model Image {
+model Game {
   id          Int @id @default(autoincrement())
-  path        String
+  imgPath     String
   baseWidth   Int
   baseHeight  Int
   characters Character[]
@@ -25,9 +25,9 @@ model Image {
 
 model Character {
   id          Int @id @default(autoincrement())
-  imageId     Int 
-  image Image @relation(fields: [imageId], references: [id])
-  path        String
+  gameId      Int 
+  game Game   @relation(fields: [gameId], references: [id])
+  imgPath     String
   width       Int
   height      Int
   x           Int
