@@ -2,12 +2,6 @@ const express = require('express')
 const game = express.Router()
 const gameController = require("../controllers/gameController")
 
-// GET GAME IMAGE
-game.get("/:gameId/image", gameController.getGameImage)
-
-// GET CHARACTER IMAGE
-game.get("/:gameId/character/:characterId/image", gameController.getCharacterImage)
-
 // GET GAME
 game.get("/:gameId", gameController.getGame)
 
