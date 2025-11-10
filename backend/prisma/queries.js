@@ -62,8 +62,23 @@ async function findGame(gameId) {
     }
 }
 
+async function findCharacterOfGame(characterId, gameId) {
+    try {
+        return prisma.character.findFirst({
+            where: {
+                id: characterId,
+                gameId: gameId
+            }
+        })
+    } catch(err) {
+        console.log("DB error at findCharacterOfGame: ", err)
+        throw err
+    }
+}
+
 module.exports = {
     findLeaderboard,
     createLeaderboardRecord,
     findGame,
+    findCharacterOfGame,
 }
