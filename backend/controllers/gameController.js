@@ -28,17 +28,7 @@ async function postMouseClick(req, res) {
         // Send not won signal
 }
 
-async function getGameImage(req, res) {
-
-}
-
-async function getCharacterImage(req, res) {
-
-}
-
 module.exports = {
     getGame,
     postMouseClick,
-    getGameImage,
-    getCharacterImage,
 }
