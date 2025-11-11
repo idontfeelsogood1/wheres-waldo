@@ -5,19 +5,27 @@ export default function Home() {
     return (
         <div className={style.container}>
             <div>
-                <img className={style.customImg} src={import.meta.env.VITE_SERVER_URL + "/images/cityport.png"} alt="City Port" />
+                <a href="/game/1">
+                    <img className={style.customImg} src={import.meta.env.VITE_SERVER_URL + "/images/cityport.png"} alt="City Port" />
+                </a>
             </div>
 
             <div>
-                Contains image 2
+                <a href="/game/2">
+                    {/* <img className={style.customImg} src={import.meta.env.VITE_SERVER_URL + "/images/cityport.png"} alt="City Port" /> */}
+                </a>
             </div>
 
             <div>
-                Contains image 3
+                <a href="/game/3">
+                    {/* <img className={style.customImg} src={import.meta.env.VITE_SERVER_URL + "/images/cityport.png"} alt="City Port" /> */}
+                </a>
             </div>
 
             <div>
-                Contains image 4
+                <a href="/game/4">
+                    {/* <img className={style.customImg} src={import.meta.env.VITE_SERVER_URL + "/images/cityport.png"} alt="City Port" /> */}
+                </a>
             </div>
         </div>
     )
