@@ -4,6 +4,7 @@ async function getGame(req, res) {
     try {
         req.session.score = 0
         req.session.startTime = Date.now()
+        req.session.foundCharacterId = []
 
         const gameId = parseInt(req.params.gameId)
         const game = await db.findGame(gameId)
@@ -21,9 +22,6 @@ function isCorrectClick(clickX, clickY, rectX, rectY, rectWidth, rectHeight) {
     return false
 }
 
-// FIGURE OUT HOW TO KNOW IF A CHARACTER HAS BEEN FOUND OR NOT
-// IF FOUND
-    // DONT ALLOW USER TO CLICK GET CORRECT SIGNAL WHEN CLICKING AT THE SAME PLACE
 async function postMouseClick(req, res) {
     try {
         const gameId = parseInt(req.params.gameId)
@@ -32,13 +30,21 @@ async function postMouseClick(req, res) {
         const clickY = parseInt(req.body.clickY)
         const { x, y, width, height } = await db.findCharacterOfGame(characterId, gameId)
 
-        if (isCorrectClick(clickX, clickY, x, y, width, height)) {
+        // False even if click is correct but character has been found
+        if (isCorrectClick(clickX, clickY, x, y, width, height) && !req.session.foundCharacterId.includes(characterId)) {
             req.session.score += 1
+            req.session.foundCharacterId.push(characterId)
+
             if (req.session.score === 3) {
+                const seconds = Math.floor((Date.now() - req.session.startTime) / 1000)
+
+                // Destroy session for safety
+                req.session.destroy()
+
                 res.json({
                     isCorrectClick: true,
                     hasWon: true,
-                    secondsFinished: Math.floor((Date.now() - req.session.startTime) / 1000)
+                    secondsFinished: seconds
                 })
             } else {
                 res.json({
