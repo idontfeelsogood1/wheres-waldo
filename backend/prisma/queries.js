@@ -39,15 +39,7 @@ async function findGame(gameId) {
                 id: gameId
             },
             include: {
-                characters: {
-                    select: {
-                        id: true,
-                        gameId: true,
-                        imgPath: true,
-                        width: true,
-                        height: true
-                    }
-                }
+                characters: { }
             }
         })
 
