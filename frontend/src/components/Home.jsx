@@ -6,7 +6,7 @@ export default function Home() {
         <div className={style.container}>
             <div>
                 <a href="/game/1">
-                    <img className={style.customImg} src={import.meta.env.VITE_SERVER_URL + "/images/cityport.png"} alt="City Port" />
+                    <img className={style.customImg} src={import.meta.env.VITE_SERVER_URL + "/images/cityport.png"} alt="cityport.png" />
                 </a>
             </div>
 
