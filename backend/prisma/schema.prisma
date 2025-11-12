@@ -17,6 +17,7 @@ model Leaderboard {
 
 model Game {
   id          Int @id @default(autoincrement())
+  name        String
   imgPath     String
   baseWidth   Int
   baseHeight  Int
@@ -27,6 +28,7 @@ model Character {
   id          Int @id @default(autoincrement())
   gameId      Int 
   game Game   @relation(fields: [gameId], references: [id])
+  name        String
   imgPath     String
   width       Int
   height      Int
