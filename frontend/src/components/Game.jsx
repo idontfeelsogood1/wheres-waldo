@@ -1,10 +1,16 @@
 import { useParams } from 'react-router';
 import { useFetch } from '../api/hooks';
+import { useState } from 'react';
+import Menu from './Menu';
 
 export default function Game() {
     const { gameId } = useParams()
+    const [imgNormalizedPosition, setImgNormalizedPosition] = useState({ x: 0, y: 0})
+    const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0})
+    const [showMenu, setShowMenu] = useState(false)
     const url = import.meta.env.VITE_SERVER_URL + `/game/${gameId}`
     const { data, loading, error } = useFetch(url)
+
     let game = null,
         characters = null
 
@@ -28,6 +34,34 @@ export default function Game() {
         characters = data.game.characters
     }
 
+    function normalizeImgCoords(clickX, clickY, baseImgWidth, baseImgHeight, newImgWidth, newImgHeight) {
+        const scaleX = baseImgWidth / newImgWidth
+        const scaleY = baseImgHeight / newImgHeight
+
+        const normalizedX = clickX * scaleX
+        const normalizedY = clickY * scaleY
+
+        return { normalizedX, normalizedY }
+    }
+
+    function handleClick(event) {
+        if (!showMenu) {
+            setShowMenu(true)
+            setMenuPosition({ x: event.pageX + 20, y: event.pageY})
+            const { normalizedX, normalizedY } = normalizeImgCoords(
+                                                    event.nativeEvent.offsetX, 
+                                                    event.nativeEvent.offsetY,
+                                                    game.baseWidth,
+                                                    game.baseHeight,
+                                                    event.currentTarget.offsetWidth,
+                                                    event.currentTarget.offsetHeight
+                                                )
+            setImgNormalizedPosition({ x: normalizedX, y: normalizedY })
+        } else {
+            setShowMenu(false)
+        }
+    }
+
     return (
         <div>
             <header>
@@ -42,9 +76,15 @@ export default function Game() {
                 })}
             </header>
             
-            {/* FIGURE OUT HOW TO GET CORDS FROM THE IMAGE WHEN USER CLICKS */}
             <main>
-                <img src={game.imgUrl} alt={game.imgPath} />
+                <img src={game.imgUrl} alt={game.imgPath} onClick={handleClick}/>
+                <Menu 
+                    characters={characters} 
+                    showMenu={showMenu} 
+                    menuPosition={menuPosition} 
+                    imgNormalizedPosition={imgNormalizedPosition}
+                    setShowMenu={setShowMenu}
+                />
             </main>
         </div>
     )
